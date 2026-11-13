@@ -1,81 +1,169 @@
-# Agentic Universe: Junior SDE Take-Home (Data & Workflow)
+# Agentic Universe – Interaction Ledger & Reporting Pipeline
 
-Thanks for your interest in Agentic Universe. We build AI voice agents for insurers, lenders and
-consumer brands across India and APAC. Our platform has three layers:
+A Python-based data ingestion and reporting pipeline designed to process interaction events, handle inconsistent input data, maintain a reliable interaction ledger, and generate accurate reports.
 
-- **Data:** leads, call events, dispositions and the interaction ledger that every client report
-  is built on.
-- **Workflow:** campaigns, scheduling, dialling, retries and callbacks, all orchestrated durably.
-- **Application:** dashboards, consoles and APIs.
+## Overview
 
-This take-home focuses on **data** and **workflow**. **Pick one assignment.** Don't do both.
+This project implements **Assignment A: Interaction Ledger & Reporting Pipeline** for the Agentic Universe Junior SDE Take-Home Challenge.
 
-| | Assignment | You'll mostly be doing |
-|---|---|---|
-| **A** | [Interaction Ledger & Reporting Pipeline](assignment-a-data/README.md) | Messy-data ingestion, schema design, idempotent pipelines, exact metrics |
-| **B** | [Durable Campaign Dispatcher](assignment-b-workflow/README.md) | State machines, idempotency, failure handling, scheduling under constraints |
+The system focuses on reliable ingestion of interaction data, structured database storage, data normalization, validation, and reporting.
 
-Both are judged on the same bar. Pick the one that excites you more.
+It is designed to handle messy input data while maintaining data consistency, preventing duplicate processing, and ensuring that interaction records remain traceable.
 
-## Ground rules
+## Key Features
 
-- **Time box:** plan for about **6–8 focused hours**. You have **72 hours** from when you receive
-  this. We know you have a life. If you run out of time, stop and tell us in `SUBMISSION.md`
-  what you'd do next. A well-explained partial solution beats a rushed complete one.
-- **Language:** Python 3.11+. Use any libraries you like; list them in `requirements.txt`.
-- **AI tools** (Claude, Cursor, Copilot, ChatGPT...) are **allowed**, as they would be on the
-  job. You must fill in [`AI_USAGE.md`](AI_USAGE.md) honestly. In the follow-up interview we'll
-  ask you to walk through your code and change it live. Submit only code you understand and can
-  defend.
-- **Ambiguity is intentional in places.** When the spec doesn't decide something, make a
-  reasonable call and write it down in `SUBMISSION.md`. Don't wait for an answer from us.
-- **Synthetic data only.** Everything here is generated. No real customer data is involved.
+- **Data Ingestion:** Processes incoming interaction data and handles different input formats.
+- **Data Normalization:** Standardizes inconsistent input values before database insertion.
+- **Data Validation:** Handles invalid, incomplete, and malformed records.
+- **Interaction Ledger:** Maintains structured interaction records for reliable tracking and reporting.
+- **Idempotent Processing:** Supports safe repeated processing without creating duplicate records.
+- **Database Management:** Uses SQLite for persistent storage and structured data management.
+- **PII Protection:** Implements encryption mechanisms to protect sensitive information.
+- **Reporting Pipeline:** Generates reports from structured interaction data.
+- **Error Handling:** Handles ingestion failures and rejected records systematically.
+- **Automated Testing:** Includes tests covering core processing and data-handling functionality.
 
-## Getting started
+## Technology Stack
 
-```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-# then follow your chosen assignment's README
+| Component | Technology |
+|---|---|
+| Language | Python 3.11+ |
+| Database | SQLite |
+| Testing | pytest |
+| Data Processing | Python |
+| Security | PII Encryption |
+
+## Project Structure
+
+```text
+agentic-universe-sde-assignment/
+│
+├── assignment-a-data/
+│   └── Original assignment specification
+│
+├── assignment-b-workflow/
+│   └── Original assignment specification
+│
+├── solution/
+│   ├── README.md
+│   ├── ingestion.py
+│   ├── events.py
+│   ├── database.py
+│   ├── reporting.py
+│   └── normalizers.py
+│
+├── tests/
+│   └── Automated test cases
+│
+├── docs/
+│   └── Supporting documentation
+│
+├── requirements.txt
+├── SUBMISSION.md
+├── AI_USAGE.md
+└── README.md
 ```
 
-`docker-compose.yml` starts a local Postgres if you want one (`docker compose up -d`). SQLite
-is equally acceptable.
+## Getting Started
 
-## What to submit
+### Prerequisites
 
-1. Push your work to a **private** GitHub or GitLab repository. Start from this repo and keep
-   its structure. Put your code in `solution/` (or a similar top-level folder) and keep the
-   original files unmodified.
-2. Your repo must include:
-   - `SUBMISSION.md`: fill in the template provided
-   - `AI_USAGE.md`: fill in the template provided
-   - Exact setup and run commands that work from a clean clone
-   - Tests, runnable with one command (for example `pytest`)
-3. Give read access to **`[[REVIEWER_HANDLES]]`** and email the repo link to
-   **`[[SUBMISSION_EMAIL]]`** before the deadline.
+- Python 3.11 or later
+- Git
 
-Please **don't** publish your solution publicly, and **don't** commit generated data, `.env`
-files, or databases.
+### 1. Clone the repository
 
-## What happens next
+```bash
+git clone <YOUR_PRIVATE_REPOSITORY_URL>
+cd agentic-universe-sde-assignment
+```
 
-If your submission clears the bar, we'll schedule a **45-minute technical conversation**:
+### 2. Create a virtual environment
 
-- 15 min: you walk us through your design and the decisions in `SUBMISSION.md`
-- 20 min: we change a requirement and you extend your code live (AI tools allowed; screen
-  share)
-- 10 min: your questions for us
+**Windows PowerShell:**
 
-## What we look for
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
 
-| Signal | What good looks like |
+**Linux / macOS:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run tests
+
+```bash
+pytest -v
+```
+
+## Architecture
+
+The implementation is organized into separate modules to maintain clear responsibilities.
+
+| Module | Responsibility |
 |---|---|
-| Correctness | It produces the right answer on data and seeds you haven't seen |
-| Robustness | It behaves sensibly when inputs are dirty, things fail, or it's run twice |
-| Design | Clear data and state model; you can explain why it's safe |
-| Code quality | Readable, organised, tested where it matters |
-| Communication | Honest about trade-offs, assumptions and what's missing |
-| Ownership | You made decisions instead of waiting to be told |
+| `ingestion.py` | Handles incoming data ingestion and processing |
+| `events.py` | Handles interaction event operations |
+| `database.py` | Manages database operations and persistence |
+| `normalizers.py` | Normalizes incoming data |
+| `reporting.py` | Handles reporting and metric generation |
 
-Good luck. We're looking forward to reading your work.
+This modular structure separates ingestion, processing, persistence, and reporting logic, making the system easier to maintain and extend.
+
+## Testing
+
+The project includes automated tests for core functionality, including:
+
+- Data ingestion and processing
+- Input normalization
+- Database operations
+- Interaction event handling
+- Reporting functionality
+- Error handling and edge cases
+
+Run the complete test suite:
+
+```bash
+pytest -v
+```
+
+**Latest recorded test result: 45 tests passed.**
+
+## Design Considerations
+
+The implementation prioritizes:
+
+1. **Correctness:** Consistent processing and accurate reporting.
+2. **Reliability:** Safe handling of repeated operations and invalid inputs.
+3. **Data Integrity:** Structured persistence and validation.
+4. **Security:** Protection of sensitive information.
+5. **Maintainability:** Modular code organization and separation of responsibilities.
+
+## Scope and Limitations
+
+This implementation focuses on the data layer of the Agentic Universe platform.
+
+The durable campaign dispatcher described in Assignment B is not part of this submission.
+
+Further improvements could include expanded reporting capabilities, additional database optimization, and broader failure-recovery testing.
+
+## Submission
+
+This repository contains the implementation for Assignment A of the Agentic Universe Junior SDE Take-Home Challenge.
+
+- Assignment: Interaction Ledger & Reporting Pipeline
+- Language: Python
+- Database: SQLite
+- Tests: pytest
+- Documentation: `SUBMISSION.md` and `AI_USAGE.md`
+
